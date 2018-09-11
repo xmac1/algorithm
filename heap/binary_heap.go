@@ -1,7 +1,9 @@
 package heap
 
+import "fmt"
+
 type BinaryHeap struct {
-	array []Node
+	array []*Node
 	idx   int
 }
 
@@ -10,28 +12,28 @@ type Node struct {
 	idx  int
 }
 
-func (n *Node) gte(other Node) bool {
+func (n *Node) gte(other *Node) bool {
 	if n.data >= other.data {
 		return true
 	}
 	return false
 }
 
-func (n *Node) gt(other Node) bool {
+func (n *Node) gt(other *Node) bool {
 	if n.data > other.data {
 		return true
 	}
 	return false
 }
 
-func (n *Node) lte(other Node) bool {
+func (n *Node) lte(other *Node) bool {
 	if n.data <= other.data {
 		return true
 	}
 	return false
 }
 
-func (n *Node) lt(other Node) bool {
+func (n *Node) lt(other *Node) bool {
 	if n.data < other.data {
 		return true
 	}
@@ -50,15 +52,21 @@ func (n *Node) RightChild() int {
 	return (n.idx + 1) * 2
 }
 
-func (bh *BinaryHeap) Parent(node Node) Node {
+func (bh *BinaryHeap) Parent(node *Node) *Node {
 	return bh.array[node.Parent()]
 }
 
-func (bh *BinaryHeap) LeftChild(node Node) Node {
+func (bh *BinaryHeap) LeftChild(node *Node) *Node {
+	if node.LeftChild() >=  len(bh.array) {
+		return nil
+	}
 	return bh.array[node.LeftChild()]
 }
 
-func (bh *BinaryHeap) RightChild(node Node) Node {
+func (bh *BinaryHeap) RightChild(node *Node) *Node {
+	if node.RightChild() >= len(bh.array) {
+		return nil
+	}
 	return bh.array[node.RightChild()]
 }
 
@@ -67,12 +75,12 @@ func (hp *BinaryHeap) MaxHeapfy(i int) {
 	left := hp.LeftChild(node)
 	right := hp.RightChild(node)
 
-	var largest Node
-	if left.gt(node) {
+	largest := node
+	if left != nil && left.gt(node) {
 		largest = left
 	}
 
-	if right.gt(largest) {
+	if right != nil && right.gt(largest) {
 		largest = right
 	}
 
@@ -80,9 +88,35 @@ func (hp *BinaryHeap) MaxHeapfy(i int) {
 		return
 	}
 
-	hp.array[node.idx].data = largest.data
-	hp.array[largest.idx].data = node.data
+	tmpData := node.data
+	node.data = largest.data
+	largest.data = tmpData
 	hp.MaxHeapfy(largest.idx)
+}
+
+func (hp *BinaryHeap) MaxHeapfyLoop(i int) {
+	node := hp.array[i]
+	for {
+		left := hp.LeftChild(node)
+		right := hp.RightChild(node)
+		largest := node
+		if left.gt(node) {
+			largest = left
+		}
+
+		if right.gt(largest) {
+			largest = left
+		}
+
+		if largest.idx == node.idx {
+			return
+		}
+
+		hp.array[node.idx].data = largest.data
+		hp.array[largest.idx].data = node.data
+		node.data = largest.data
+		node.idx = largest.idx
+	}
 }
 
 func (hp *BinaryHeap) InsertMaxHeap() {
@@ -90,5 +124,22 @@ func (hp *BinaryHeap) InsertMaxHeap() {
 }
 
 func BuildFromArray(arr []int) (heap *BinaryHeap) {
+	bh := &BinaryHeap{
+		array:make([]*Node, len(arr)),
+	}
+	for i := len(arr) - 1; i >=0; i-- {
+		bh.array[i] = &Node{}
+		bh.array[i].data = arr[i]
+		bh.array[i].idx = i
+	}
 
+	for i:= len(bh.array)-1; i >= 0; i-- {
+		bh.MaxHeapfy(i)
+	}
+
+	for _, data := range bh.array {
+		fmt.Println(data)
+	}
+
+	return bh
 }
