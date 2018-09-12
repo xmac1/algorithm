@@ -1,7 +1,5 @@
 package heap
 
-import "fmt"
-
 type BinaryHeap struct {
 	array []*Node
 	idx   int
@@ -123,6 +121,22 @@ func (hp *BinaryHeap) InsertMaxHeap() {
 
 }
 
+func HeapSort(arr []int) (orderd []int) {
+	hp := BuildFromArray(arr)
+
+	orderd = make([]int, len(arr))
+	for i := len(hp.array) - 1; i >= 1 ; i -- {
+		orderd[i] = hp.array[0].data
+		hp.array[0].data = hp.array[i].data
+		hp.array = hp.array[:len(hp.array)-1]
+		hp.MaxHeapfy(0)
+	}
+
+	orderd[0] = hp.array[0].data
+
+	return
+}
+
 func BuildFromArray(arr []int) (heap *BinaryHeap) {
 	bh := &BinaryHeap{
 		array:make([]*Node, len(arr)),
@@ -137,9 +151,7 @@ func BuildFromArray(arr []int) (heap *BinaryHeap) {
 		bh.MaxHeapfy(i)
 	}
 
-	for _, data := range bh.array {
-		fmt.Println(data)
-	}
+
 
 	return bh
 }

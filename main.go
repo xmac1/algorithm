@@ -1,13 +1,21 @@
 package main
 
 import (
-	"github.com/xmac1/example/heap"
 	"fmt"
+	"math/rand"
+	"time"
+	"sort"
 )
 
 func main() {
-	arr := []int{3, 6, 8, 1, 2, 5}
+	var arr []int
 
-	hp := heap.BuildFromArray(arr)
-	fmt.Print(hp)
+	for i := 0; i < 1000000; i++ {
+		arr = append(arr, rand.Intn(1000000))
+	}
+
+	start  := time.Now()
+	sort.Ints(arr)
+	dur := time.Since(start)
+	fmt.Print(dur.String())
 }
