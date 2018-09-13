@@ -2,20 +2,14 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
-	"sort"
+	"unicode/utf8"
 )
 
 func main() {
-	var arr []int
 
-	for i := 0; i < 1000000; i++ {
-		arr = append(arr, rand.Intn(1000000))
-	}
+	a := "ab"
 
-	start  := time.Now()
-	sort.Ints(arr)
-	dur := time.Since(start)
-	fmt.Print(dur.String())
+	in := make([]byte, 4)
+	n := utf8.EncodeRune(in, int32(a[0]))
+	fmt.Println(string(in[:n]))
 }
