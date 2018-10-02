@@ -1,24 +1,19 @@
 package main
 
-import (
-	"fmt"
-
-	"math/rand"
-	"time"
-
-	"github.com/xmac1/example/sequential"
-)
+import "github.com/xmac1/example/searchtree"
 
 func main() {
-	n := 2200000
-	arr := make([]int, 0, n)
-	for i := 0; i < n; i++ {
-		arr = append(arr, rand.Intn(n))
+	arr := []int{5, 3, 4, 1, 6, 2}
+
+	t := &searchtree.BinarySearchTree{}
+
+	for _, key := range arr {
+		t.Insert(key)
 	}
 
-	start := time.Now()
-	fmt.Println(sequential.RandomSelect(arr, 2200001))
-	dur := time.Since(start)
-	fmt.Println(dur.String())
-	fmt.Println(arr)
+	t.Insert(7)
+
+	t.Delete(1)
+	t.Delete(6)
+	t.InOrderWalk(t.Root())
 }
