@@ -20,3 +20,18 @@ def decomposite_n(n: int, start: int, m: Dict[Tuple[int, int], int]):
         total += decomposite_n(n-i, i, m)
     m[(n, start)] = total
     return total
+
+def bottom_up_decomposite_n(n: int):
+    """
+    bottom-up method for dynamic programming
+    """
+    m = dict()
+    for i in range(n+1):
+        m[(0, i)] = 0
+        m[(i,i)] = 0
+    for i in range(1, int(n/2)+1):
+        for j in range(i, n - i):
+            m[(i, j)] = 1 + m[(i, j-1)]
+
+if __name__ == "__main__":
+    bottom_up_decomposite_n(5)
