@@ -31,7 +31,8 @@ def bottom_up_decomposite_n(n: int):
         m[(i,i)] = 0
     for i in range(1, int(n/2)+1):
         for j in range(i, n - i):
-            m[(i, j)] = 1 + m[(i, j-1)]
+            if j > i:
+                
 
 if __name__ == "__main__":
     bottom_up_decomposite_n(5)
