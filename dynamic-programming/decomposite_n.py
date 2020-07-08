@@ -34,5 +34,10 @@ def bottom_up_decomposite_n(n: int):
             if j > i:
                 
 
+
+
+
+                
+
 if __name__ == "__main__":
     bottom_up_decomposite_n(5)
