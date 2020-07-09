@@ -27,17 +27,26 @@ def bottom_up_decomposite_n(n: int):
     """
     m = dict()
     for i in range(n+1):
-        m[(0, i)] = 0
         m[(i,i)] = 0
     for i in range(1, int(n/2)+1):
-        for j in range(i, n - i):
-            if j > i:
-                
+        for j in range(i, n-i+1):
+            total = 0
+            if j <= i:
+                total = 0 
+            else:
+                for k in range(i, j):
+                    if j - k < k:
+                        total = 1
+                        break
+                    total += 1 + m[(j-k, k)]
+            m[j, i] = total
+    total = 1
+    for i in range(1, int(n/2)+1):
+        total += m[n-i, i] + 1
+    return total
 
-
-
-
-                
+                   
 
 if __name__ == "__main__":
-    bottom_up_decomposite_n(5)
+   total =  bottom_up_decomposite_n(5)
+   print(total)
