@@ -8,7 +8,7 @@ branches:
     - master
 
 env:
-  - GO111MODULE=1
+  - GO111MODULE=on
 
 install:
   - go mod tidy
