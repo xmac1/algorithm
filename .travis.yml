@@ -1,0 +1,17 @@
+language: go
+
+go:
+  - 1.14
+
+branches:
+  only:
+    - master
+
+env:
+  - GO111MODULE=1
+
+install:
+  - go mod tidy
+
+script:
+  - go test ./...

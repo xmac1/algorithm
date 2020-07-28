@@ -200,13 +200,13 @@ func (qt *Quadtree) getIndexPoint(x, y float32) int {
 	horizontalMidpoint := qt.Bounds.Y + (qt.Bounds.Height / 2)
 
 	//pRect can completely fit within the top quadrants
-	topQuadrant := (y < horizontalMidpoint) && (y < horizontalMidpoint)
+	topQuadrant := y < horizontalMidpoint
 
 	//pRect can completely fit within the bottom quadrants
 	bottomQuadrant := y > horizontalMidpoint
 
 	//pRect can completely fit within the left quadrants
-	if (x < verticalMidpoint) && (x < verticalMidpoint) {
+	if x < verticalMidpoint {
 
 		if topQuadrant {
 			index = 1
@@ -241,7 +241,7 @@ func (qt *Quadtree) getIndex(pRect Bounds) int {
 	topQuadrant := (pRect.Y < horizontalMidpoint) && (pRect.Y+pRect.Height < horizontalMidpoint)
 
 	//pRect can completely fit within the bottom quadrants
-	bottomQuadrant := (pRect.Y > horizontalMidpoint)
+	bottomQuadrant := pRect.Y > horizontalMidpoint
 
 	//pRect can completely fit within the left quadrants
 	if (pRect.X < verticalMidpoint) && (pRect.X+pRect.Width < verticalMidpoint) {

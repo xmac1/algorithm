@@ -13,7 +13,7 @@ func RandomSelect(arr []int, i int) int {
 		return arr[0]
 	}
 
-	q := randomPartiton(arr)
+	q := randomPartition(arr)
 
 	left := arr[:q]
 	if len(left) == i-1 {
@@ -28,7 +28,7 @@ func RandomSelect(arr []int, i int) int {
 
 }
 
-func randomPartiton(arr []int) (q int) {
+func randomPartition(arr []int) (q int) {
 	r := rand.Intn(len(arr))
 	pivot := arr[r]
 	arr[r] = arr[len(arr)-1]
