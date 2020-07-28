@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/xmac1/algorithm/badge.svg?branch=master)](https://coveralls.io/github/xmac1/algorithm?branch=master)
+[![Coverage Status](http://demo.opencov.com/projects/106/badge.svg)](http://demo.opencov.com/projects/106)
 
 # example
 example code for further learning
