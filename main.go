@@ -1,6 +1,6 @@
 package main
 
-import "github.com/xmac1/example/searchtree"
+import "github.com/xmac1/algorithm/searchtree"
 
 func main() {
 	arr := []int{5, 3, 4, 1, 6, 2}

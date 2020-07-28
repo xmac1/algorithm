@@ -19,13 +19,13 @@ func RandomSort(arr []int) {
 		return
 	}
 
-	q := random_partition(arr)
+	q := randomPartition(arr)
 
 	RandomSort(arr[:q])
 	RandomSort(arr[q+1:])
 }
 
-func random_partition(arr []int) int {
+func randomPartition(arr []int) int {
 	i := rand.Intn(len(arr) - 1)
 
 	tmp := arr[len(arr)-1]

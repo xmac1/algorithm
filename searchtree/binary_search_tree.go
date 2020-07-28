@@ -1,14 +1,22 @@
 package searchtree
 
-import "fmt"
-
 type BinarySearchTree struct {
 	root *Node
+
+	walkFunc func(node *Node)
 }
 
 type Node struct {
 	key            int
 	left, right, p *Node
+}
+
+func New(walkFunc func(node *Node)) *BinarySearchTree {
+	tree := &BinarySearchTree{
+		root: nil,
+		walkFunc: walkFunc,
+	}
+	return tree
 }
 
 func (t *BinarySearchTree) Root() *Node {
@@ -24,7 +32,7 @@ func (t *BinarySearchTree) InOrderWalk(node *Node) {
 		t.InOrderWalk(node.left)
 	}
 
-	fmt.Println(node.key)
+	t.walkFunc(node)
 
 	if node.right != nil {
 		t.InOrderWalk(node.right)
@@ -110,28 +118,28 @@ func (t *BinarySearchTree) Delete(key int) {
 
 func (t *BinarySearchTree) DeleteNode(node *Node) {
 	if node.left == nil {
-		t.transplant(node, node.right)
+		t.transparent(node, node.right)
 		return
 	}
 
 	if node.right == nil {
-		t.transplant(node, node.left)
+		t.transparent(node, node.left)
 		return
 	}
 
 	min := t.Minimum(node.right)
 	if min != node.right {
-		t.transplant(min, min.right)
+		t.transparent(min, min.right)
 		min.right = node.right
 		node.right.p = min
 	}
-	t.transplant(node, min)
+	t.transparent(node, min)
 	min.left = node.left
 	node.left.p = min
 }
 
 // replace node replace node's position in tree, node's parent become replace's parent
-func (t *BinarySearchTree) transplant(node, replace *Node) {
+func (t *BinarySearchTree) transparent(node, replace *Node) {
 	if node.p == nil {
 		t.root = replace
 		return
